@@ -3,7 +3,7 @@
 
 
 generic_file::generic_file(moltengamepad* mg, struct udev_device* node, bool grab_ioctl, bool grab_chmod, bool rumble) {
-  this->mg = mg;
+  /*this->mg = mg;
   this->rumble = rumble;
   struct udev_device* hidparent = udev_device_get_parent_with_subsystem_devtype(node,"hid",NULL);
   if (hidparent) {
@@ -28,12 +28,12 @@ generic_file::generic_file(moltengamepad* mg, struct udev_device* node, bool gra
   
   if (fds.empty()) throw - 1;
 
-  thread = new std::thread(&generic_file::thread_loop, this);
+  thread = new std::thread(&generic_file::thread_loop, this);*/
 }
 
 
 generic_file::~generic_file() {
-  keep_looping = false;
+  /*keep_looping = false;
   for (auto node_it : nodes) {
     close_node(node_it.first, false); //TODO: Fix this repeated map look up...
   }
@@ -48,13 +48,13 @@ generic_file::~generic_file() {
   }
   close(epfd);
   close(internal_pipe[0]);
-  close(internal_pipe[1]);
+  close(internal_pipe[1]);*/
 
 }
 
 
 void generic_file::open_node(struct udev_device* node) {
-  std::lock_guard<std::mutex> guard(lock);
+  /*std::lock_guard<std::mutex> guard(lock);
   std::string path(udev_device_get_devnode(node));
   if (nodes.find(path) == nodes.end()) {
     int mode = rumble ? O_RDWR : O_RDONLY;
@@ -90,18 +90,18 @@ void generic_file::open_node(struct udev_device* node) {
 
     fds.push_back(fd);
     nodes[path] = {path, udev_device_ref(node), fd};
-  }
+  }*/
 }
 
 void generic_file::close_node(struct udev_device* node, bool erase) {
-  const char* path = udev_device_get_devnode(node);
+  /*const char* path = udev_device_get_devnode(node);
   if (!path) return;
 
-  close_node(std::string(path), erase);
+  close_node(std::string(path), erase);*/
 }
 
 void generic_file::close_node(const std::string& path, bool erase) {
-  std::lock_guard<std::mutex> guard(lock);
+  /*std::lock_guard<std::mutex> guard(lock);
   auto it = nodes.find(path);
 
   if (it == nodes.end()) return;
@@ -110,7 +110,7 @@ void generic_file::close_node(const std::string& path, bool erase) {
   if (grab_chmod)
     mg->udev.grab_permissions(it->second.node, false);
   udev_device_unref(it->second.node);
-  if (erase) nodes.erase(it);
+  if (erase) nodes.erase(it);*/
 }
 
 void generic_file::add_dev(input_source* dev) {
@@ -118,7 +118,7 @@ void generic_file::add_dev(input_source* dev) {
 }
 
 void generic_file::thread_loop() {
-  struct epoll_event event;
+  /*struct epoll_event event;
   struct epoll_event events[1];
   memset(&event, 0, sizeof(event));
   while ((keep_looping)) {
@@ -148,7 +148,7 @@ void generic_file::thread_loop() {
       //For now, rely on the generic manager telling us via udev events.
     }
 
-  }
+  }*/
 }
 
 int generic_file::get_fd() {

@@ -20,7 +20,6 @@ void signal_handler(int signum) {
   //Otherwise, we want to interrupt everything! (And let them shut down appropriately)
   QUIT_APPLICATION = true;
   delete app;
-  exit(0);
 
   return;
 }

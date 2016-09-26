@@ -1,6 +1,6 @@
 #ifndef UDEV_H
 #define UDEV_H
-#include <libudev.h>
+//#include <libudev.h>
 #include <vector>
 #include <thread>
 #include <mutex>
@@ -9,6 +9,18 @@
 
 class device_manager;
 class uinput;
+
+struct udev{
+
+};
+
+struct udev_monitor{
+
+};
+
+struct udev_device{
+
+};
 
 struct node_permissions {
   udev_device* node;
@@ -19,6 +31,7 @@ struct node_permissions {
 struct grabbed_node {
   std::vector<node_permissions> children;
 };
+
 
 class udev_handler {
 public:

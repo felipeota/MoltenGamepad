@@ -1,6 +1,6 @@
 
 #uncomment the lines below to include those plugins
-MG_BUILT_INS+=wiimote
+#MG_BUILT_INS+=wiimote
 #MG_BUILT_INS+=steamcontroller
 
 #If you need to run "make eventlists" and it failed to find your
@@ -10,7 +10,8 @@ MG_BUILT_INS+=wiimote
 INPUT_HEADER:=""
 
 LDLIBS=-ludev -lpthread
-CPPFLAGS+=-std=c++14
+LDLIBS=-fPIE -pie
+CPPFLAGS+=-std=c++14 -fPIE -pie
 
 SRCS:=$(shell echo source/core/*.cpp source/core/*/*.cpp source/core/*/*/*.cpp source/plugin/*.cpp)
 
@@ -60,7 +61,8 @@ $(DEPDIR)/%.d: ;
 moltengamepad : $(OBJS)
 	@echo "The following plugins are being statically included:"
 	@echo "    " $(MG_BUILT_INS)
-	$(CXX) $(LDFLAGS) -o moltengamepad $(OBJS) $(LDLIBS)
+	$(CC)  $(LDFLAGS) -c source/core/glob.c
+	$(CXX) $(LDFLAGS) -o moltengamepad $(OBJS) glob.o $(LDLIBS)
 
 clean :
 	$(RM) moltengamepad

@@ -38,7 +38,18 @@ enum file_category {
   FILE_DEVICE_SET,   //Device-specific settings (FUTURE)
 };
 
+#include <string>
+#include <sstream>
 
+namespace std{
+  template <typename T>
+  std::string to_string(T value)
+  {
+      std::ostringstream os ;
+      os << value ;
+      return os.str() ;
+  }
+}
 
 extern const option_decl general_options[];
 

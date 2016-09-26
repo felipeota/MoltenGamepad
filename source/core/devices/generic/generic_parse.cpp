@@ -4,6 +4,7 @@
 #include "../../parser.h"
 #include "../../moltengamepad.h"
 #include "../../eventlists/eventlist.h"
+#include <stdlib.h>
 
 
 #define GENDEV_INCOMPLETE_INFO -1
@@ -100,7 +101,7 @@ void generic_assignment_line(std::vector<token>& line, generic_driver_info*& inf
 
   if (field == "split") {
     try {
-      int split_count  = std::stoi(value);
+      int split_count  = atoi(value.c_str());
       info->split = split_count;
       info->split_types.clear();
       info->split_types.assign(split_count,"gamepad");
@@ -113,7 +114,7 @@ void generic_assignment_line(std::vector<token>& line, generic_driver_info*& inf
   int split_id = 1;
   if (!prefix.empty()) {
     try {
-      split_id  = std::stoi(prefix);
+      split_id  = atoi(prefix.c_str());
       if (split_id <= 0 || split_id > info->split)
         throw -1;
     } catch (...) {
@@ -155,7 +156,7 @@ void generic_assignment_line(std::vector<token>& line, generic_driver_info*& inf
 
 int parse_hex(const std::string& text) {
   try {
-    return std::stoi(text,0,16);
+    return strtol(text.c_str(),NULL,16);
   } catch(...) {
   }
   return -1;

@@ -22,6 +22,8 @@ const char* try_to_find_uinput() {
   return nullptr;
 }
 
+#define UI_GET_SYSNAME(len)     _IOC(_IOC_READ, UINPUT_IOCTL_BASE, 44, len)
+
 std::string uinput_devnode(int fd) {
   char buffer[128];
   memset(buffer,0,sizeof(buffer));
@@ -170,7 +172,7 @@ int uinput::make_keyboard(const uinput_ids& ids) {
   for (i = KEY_ESC; i <= BTN_TASK; i++) {
     ioctl(fd, UI_SET_KEYBIT, i);
   }
-  for (i = KEY_OK; i < KEY_KBDINPUTASSIST_CANCEL; i++) {
+  for (i = KEY_OK; i < KEY_BRIGHTNESS_MAX; i++) {
     ioctl(fd, UI_SET_KEYBIT, i);
   }
 

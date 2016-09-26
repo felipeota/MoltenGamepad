@@ -4,6 +4,7 @@
 #include <string>
 #include <cctype>
 #include "../parser.h"
+#include <stdlib.h>
 
 int do_print_profile(moltengamepad* mg, std::string name, std::ostream& out);
 

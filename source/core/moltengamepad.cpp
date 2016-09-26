@@ -3,9 +3,11 @@
 #include <fstream>
 #include <sys/stat.h>
 #include <errno.h>
-#include <glob.h>
+#include "glob.h"
 #include "devices/generic/generic.h"
 #include "parser.h"
+#include <stdlib.h>
+
 
 //FUTURE WORK: Make it easier to specify additional virtpad styles.
 
@@ -29,42 +31,6 @@ const virtpad_settings xpad_padstyle = {
 
 std::vector<std::string> find_xdg_config_dirs(std::string commandline_override) {
   std::vector<std::string> dirs;
-  //First check for XDG_CONFIG_HOME or use the override instead.
-  //The override is a bit redundant, but backwards compatibility is good for now.
-  if (!commandline_override.empty()) {
-    dirs.push_back(commandline_override);
-  } else {
-    const char* config_home = getenv("XDG_CONFIG_HOME");
-    std::string confdir;
-    if (config_home && config_home[0] != '\0') {
-      confdir = std::string(confdir);
-    } else {
-      //It was unset, so try its specified default
-      if (getenv("HOME")) {
-        confdir = std::string(getenv("HOME")) + "/.config/";
-      }
-    }
-    if (!confdir.empty()) {
-      mkdir(confdir.c_str(), 0755);
-      dirs.push_back(confdir + "/moltengamepad/");
-      mkdir(dirs.front().c_str(), 0755);
-    }
-  }
-  
-  //Now check XDG_CONFIG_DIRS
-  const char* config_dirs = getenv("XDG_CONFIG_DIRS");
-  if (config_dirs && config_dirs[0] != '\0') {
-    std::string confdirs = std::string(config_dirs);
-    //have to split on colons
-    std::stringstream stream(confdirs);
-    std::string dir;
-    while (std::getline(stream, dir, ':')) {
-        dirs.push_back(dir + "/moltengamepad/");
-    }
-  } else {
-    //It was unset, so try its specified default
-    dirs.push_back("/etc/xdg/moltengamepad/");
-  }
   
   return dirs;
 }

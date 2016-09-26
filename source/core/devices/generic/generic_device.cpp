@@ -53,7 +53,7 @@ int generic_device::init(input_source* ref) {
 }
 
 generic_device::~generic_device() {
-  if (node) udev_device_unref(node);
+  //if (node) udev_device_unref(node);
   if (eventstates) free(eventstates);
 }
 

@@ -1,5 +1,6 @@
 #include "options.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 int read_bool(const std::string value, std::function<void (bool)> process) {
   if (value == "true") {
@@ -95,7 +96,7 @@ int options::set_locked(std::string& opname, std::string& value) {
 
   if (type == MG_INT) {
     try {
-      int i = std::stoi(value);
+      int i = atoi(value.c_str());
       opts[opname].value.integer = i;
       opts[opname].stringval = value;
       newval.integer = i;

@@ -2,7 +2,7 @@
 #include "parser.h"
 #include "event_translators/event_change.h"
 #include "event_translators/translators.h"
-
+#include <stdlib.h>
 /*Want a modified INI syntax.
  * Three main line formats.
  *
@@ -479,7 +479,7 @@ event_translator* MGparser::parse_trans_expr(enum entry_type intype, complex_exp
 int read_ev_code(std::string& code, out_type type) {
   int i;
   try {
-    i = std::stoi(code);
+    i = atoi(code.c_str());
     return i;
   } catch (...) {
     if (type == OUT_NONE) return 0;

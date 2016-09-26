@@ -76,7 +76,7 @@ bool matched(struct udev* udev, struct udev_device* dev, const device_match& mat
   bool result = true;
   bool valid = false; //require at least one thing be matched...
   //lots of things to compute
-  const char* phys = nullptr;
+  /*const char* phys = nullptr;
   const char* uniq = nullptr;
   std::string vendor_id;
   std::string product_id;
@@ -124,12 +124,12 @@ bool matched(struct udev* udev, struct udev_device* dev, const device_match& mat
     int product = parse_hex(product_id);
     result = result && (match.product == product);
   }
-  //a match must be valid as well as meeting all criteria
+  //a match must be valid as well as meeting all criteria*/
   return valid && result;
 }
 
 int generic_manager::accept_device(struct udev* udev, struct udev_device* dev) {
-  std::lock_guard<std::mutex> lock(devlistlock);
+  /*std::lock_guard<std::mutex> lock(devlistlock);
   const char* path = udev_device_get_syspath(dev);
   const char* subsystem = udev_device_get_subsystem(dev);
   const char* action = udev_device_get_action(dev);
@@ -159,7 +159,7 @@ int generic_manager::accept_device(struct udev* udev, struct udev_device* dev) {
         }
       }
     }
-  }
+  }*/
 
 
 
