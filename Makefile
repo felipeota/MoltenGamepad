@@ -1,7 +1,7 @@
 
 #uncomment the lines below to include those plugins
 #MG_BUILT_INS+=wiimote
-#MG_BUILT_INS+=steamcontroller
+MG_BUILT_INS+=network_device
 
 #If you need to run "make eventlists" and it failed to find your
 #input header where all the key codes are defined, put the
