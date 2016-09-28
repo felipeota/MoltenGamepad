@@ -13,6 +13,7 @@ int do_move(moltengamepad* mg, std::vector<token>& command);
 int do_alterslot(moltengamepad* mg, std::vector<token>& command);
 int do_clear(moltengamepad* mg, std::vector<token>& command);
 int do_set(moltengamepad* mg, std::vector<token>& command);
+int do_send(moltengamepad* mg, std::vector<token>& command);
 
 #define HELP_TEXT "available commands:\n"\
 "\tprint:\tprint out lists and information\n"\
@@ -44,6 +45,7 @@ int do_command(moltengamepad* mg, std::vector<token>& command) {
   if (command.front().value == "alterslot") return do_alterslot(mg, command);
   if (command.front().value == "clear") return do_clear(mg, command);
   if (command.front().value == "set") return do_set(mg, command);
+  if (command.front().value == "send") return do_send(mg, command);
   if (command.front().value == "help") {
     std::cout << HELP_TEXT << std::endl;
     return 0;
