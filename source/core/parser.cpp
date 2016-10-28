@@ -478,14 +478,14 @@ event_translator* MGparser::parse_trans_expr(enum entry_type intype, complex_exp
 
 int read_ev_code(std::string& code, out_type type) {
   int i;
-  try {
-    i = atoi(code.c_str());
+  char * endstr;
+  i = strtol(code.c_str(), &endstr, 10);
+  if (endstr[0] == '\0'){
     return i;
-  } catch (...) {
-    if (type == OUT_NONE) return 0;
-    event_info info = lookup_event(code.c_str());
-    if (info.type == type) return info.value;
   }
+  if (type == OUT_NONE) return 0;
+  event_info info = lookup_event(code.c_str());
+  if (info.type == type) return info.value;
   return -1;
 }
 
@@ -517,6 +517,7 @@ event_translator* MGparser::parse_special_trans(enum entry_type intype, complex_
       }
       //Check for it being an axis
       int out_axis = read_ev_code(outevent, OUT_ABS);
+        std::cout << intype << " " << outevent << " " << out_axis << std::endl;
       if (out_axis >= 0 && intype == DEV_AXIS) return new axis2axis(out_axis, direction);
       if (out_axis >= 0 && intype == DEV_KEY)  return new btn2axis(out_axis, direction);
 
